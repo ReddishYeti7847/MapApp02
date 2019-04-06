@@ -13,7 +13,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -123,5 +127,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         cir.fillColor(Color.argb(0x80,0xff,0xff,0x00));
         cir.radius(20000);  //20km
         mMap.addCircle(cir);
+
+        //画像をマップに表示(オーバーレイ)
+        GroundOverlayOptions overlay = new GroundOverlayOptions();
+        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.tower);
+        overlay.image(bitmap);
+        overlay.anchor(0.5f,0.5f);
+        overlay.position(new LatLng(48.873792,2.295028),50000f,50000f);
+        GroundOverlay lay = mMap.addGroundOverlay(overlay);
+        lay.setTransparency(0.4f);
     }
 }

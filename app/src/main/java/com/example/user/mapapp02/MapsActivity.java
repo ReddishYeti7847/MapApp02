@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -136,5 +137,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         overlay.position(new LatLng(48.873792,2.295028),50000f,50000f);
         GroundOverlay lay = mMap.addGroundOverlay(overlay);
         lay.setTransparency(0.4f);
+
+        //マーカーを画像でカスタマイズする
+        MarkerOptions mopt = new MarkerOptions();
+        mopt.position(hakodate);
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.marker);
+        mopt.icon(icon);
+        mMap.addMarker(mopt);
     }
 }

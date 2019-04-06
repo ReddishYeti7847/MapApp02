@@ -15,6 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -106,7 +107,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addPolyline(opt);
 
         //地図に図形(ポリゴン)を描く
+        PolygonOptions poly = new PolygonOptions();
+        poly.add(new LatLng(34.659526,135.57592), new LatLng(35.010362,135.768735), new LatLng(34.669835,135.163283));
+        poly.strokeColor(Color.BLUE);
+        poly.strokeWidth(4);
+        poly.fillColor(Color.argb(0x80,0x00,0xff,0xff));
+        mMap.addPolygon(poly);
 
         //地図に円を描く
+
     }
 }

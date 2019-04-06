@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -115,6 +116,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addPolygon(poly);
 
         //地図に円を描く
-
+        CircleOptions cir = new CircleOptions();
+        cir.center(new LatLng(35.681401, 139.767211));
+        cir.strokeColor(Color.rgb(0xff,0x80,0x00));
+        cir.strokeWidth(2);
+        cir.fillColor(Color.argb(0x80,0xff,0xff,0x00));
+        cir.radius(20000);  //20km
+        mMap.addCircle(cir);
     }
 }

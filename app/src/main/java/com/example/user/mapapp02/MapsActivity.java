@@ -2,6 +2,8 @@ package com.example.user.mapapp02;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.hardware.camera2.params.ColorSpaceTransform;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -55,18 +58,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
 
-
-        //シドニーにピンを立てる
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-
-        //函館にピンを立てる
-        LatLng hakodate = new LatLng(41.7737838, 140.7262966);
-        mMap.addMarker(new MarkerOptions().position(hakodate).title("函館"));
-        //カメラを函館に移動する。
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hakodate, 11));
-
-
         // 現在位置表示の有効化
         mMap.setMyLocationEnabled(true);
         // 設定の取得
@@ -80,12 +71,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // すべてのジェスチャーの有効化
         settings.setAllGesturesEnabled(true);
         // 回転ジェスチャーの有効化
-        settings.setRotateGesturesEnabled(false);
+        settings.setRotateGesturesEnabled(true);
         // スクロールジェスチャーの有効化
         settings.setScrollGesturesEnabled(true);
         // Tlitジェスチャー(立体表示)の有効化
         settings.setTiltGesturesEnabled(true);
         // ズームジェスチャー(ピンチイン・アウト)の有効化
-        settings.setZoomGesturesEnabled(false);
+        settings.setZoomGesturesEnabled(true);
+
+
+
+        //シドニーにピンを立てる
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+
+        //函館にピンを立てる
+        LatLng hakodate = new LatLng(41.7737838, 140.7262966);
+        mMap.addMarker(new MarkerOptions().position(hakodate).title("函館"));
+        //カメラを函館に移動する。
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hakodate, 11));
+
+
+
+        //地図に線を引く(バンコク―函館)    直線・測地線
+        PolylineOptions opt = new PolylineOptions();
+        opt.add(new LatLng(13.754214, 100.493025),hakodate);
+        opt.geodesic(true);
+        opt.color(Color.BLUE);
+        opt.width(3);
+        mMap.addPolyline(opt);
+
+        opt.geodesic(false);
+        opt.color(Color.MAGENTA);
+        mMap.addPolyline(opt);
+
+        //地図に図形(ポリゴン)を描く
+
+        //地図に円を描く
     }
 }

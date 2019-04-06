@@ -1,5 +1,8 @@
 package com.example.user.mapapp02;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -7,6 +10,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -38,6 +42,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        // 航空写真に変更
+//        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        // 渋滞状況を表示
+//        mMap.setTrafficEnabled(true);
+        // 現在の位置情報を表示
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, 1);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
+
         //シドニーにピンを立てる
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -47,5 +65,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(hakodate).title("函館"));
         //カメラを函館に移動する。
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hakodate, 11));
+
+
+        // 現在位置表示の有効化
+        mMap.setMyLocationEnabled(true);
+        // 設定の取得
+        UiSettings settings = mMap.getUiSettings();
+        // コンパスの有効化
+        settings.setCompassEnabled(true);
+        // 現在位置に移動するボタンの有効化
+        settings.setMyLocationButtonEnabled(true);
+        // ズームイン・アウトボタンの有効化
+        settings.setZoomControlsEnabled(true);
+        // すべてのジェスチャーの有効化
+        settings.setAllGesturesEnabled(true);
+        // 回転ジェスチャーの有効化
+        settings.setRotateGesturesEnabled(false);
+        // スクロールジェスチャーの有効化
+        settings.setScrollGesturesEnabled(true);
+        // Tlitジェスチャー(立体表示)の有効化
+        settings.setTiltGesturesEnabled(true);
+        // ズームジェスチャー(ピンチイン・アウト)の有効化
+        settings.setZoomGesturesEnabled(false);
     }
 }
